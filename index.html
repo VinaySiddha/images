@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,5 +17,102 @@
     <img src="./img5.png" alt="">
     <img src="./img6.png" alt="">
 
+</body>
+</html>
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Certificate Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #555555;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        .certificate-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Certificate Verified by CAI & AIM Department (SVEC) </h1>
+        <p id="validation-message" class="success">This certificate has been successfully verified.</p>
+        <p>Your certificate number is:</p>
+        <p id="certificate-number" class="certificate-number"></p>
+    </div>
+
+    <script>
+        // Function to get the certificate number from the URL query parameters
+        function getCertificateNumber() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('certificate');
+        }
+
+        // Function to format the certificate number as CAI/AIM/xxx where xxx is padded
+        function formatCertificateNumber(number) {
+            return `CAI/AIM/${String(number).padStart(3, '0')}`;
+        }
+
+        // Validate and display the certificate number
+        function displayCertificateDetails() {
+            const certificateNumber = parseInt(getCertificateNumber(), 10);
+            const numberElement = document.getElementById('certificate-number');
+            const messageElement = document.getElementById('validation-message');
+
+            // Validate if the certificate number is between 1 and 105
+            if (certificateNumber >= 1 && certificateNumber <= 105) {
+                // Format and display the certificate number
+                numberElement.textContent = formatCertificateNumber(certificateNumber);
+            } else {
+                // Display an error if the certificate number is invalid
+                messageElement.textContent = "Invalid or missing certificate number.";
+                messageElement.classList.remove('success');
+                messageElement.classList.add('error');
+                numberElement.textContent = "";
+            }
+        }
+
+        // Call the function when the page loads
+        window.onload = displayCertificateDetails;
+    </script>
 </body>
 </html>
